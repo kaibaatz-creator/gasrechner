@@ -1,52 +1,126 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gasflaschen Rechner</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f4f4f4;
+      padding: 20px;
+      margin: 0;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .top-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    input, select {
+      padding: 12px;
+      margin: 8px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    input {
+      width: 85%;
+      max-width: 350px;
+    }
+
+    button {
+      padding: 14px;
+      font-size: 18px;
+      background: #2c7be5;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      margin-top: 10px;
+    }
+
+    .reset-btn {
+      background: #dc3545;
+    }
+
+    .result {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    .info {
+      font-size: 14px;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    .bar-container {
+      width: 90%;
+      max-width: 500px;
+      background: #ddd;
+      border-radius: 20px;
+      margin: 25px auto;
+      height: 30px;
+      overflow: hidden;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0%;
+      transition: 0.4s;
+    }
+
+    .green { background: #28a745; }
+    .yellow { background: #ffc107; }
+    .red { background: #dc3545; }
+
+    .history {
+      margin-top: 25px;
+      text-align: left;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
 <h2>🔥 Gasflaschen Rechner</h2>
 
 <div class="top-row">
-
-  <select id="preset" onchange="presetSetzen()" style="width:145px;">
+  <select id="preset" onchange="presetSetzen()">
     <option value="">Flaschentyp</option>
     <option value="5">5 kg</option>
     <option value="11">11 kg</option>
   </select>
 
-  <input type="number"
-         id="preis"
-         placeholder="Preis (€)"
-         style="width:120px;">
-
+  <input type="number" id="preis" placeholder="Preis (€)" style="width:120px;">
 </div>
 
 <select id="grill" onchange="grillSetzen()">
-
   <option value="">Grill wählen</option>
-
-  <optgroup label="Weber - Spirit">
-    <option value="0.45">Spirit E-210</option>
-    <option value="0.50">Spirit E-310</option>
-  </optgroup>
-
-  <optgroup label="Weber - Genesis">
-    <option value="0.75">Genesis E-325</option>
-    <option value="1.20">Genesis II E-610</option>
-  </optgroup>
-
-  <optgroup label="Napoleon - Rogue">
-    <option value="0.65">Rogue 425</option>
-    <option value="0.80">Rogue 525</option>
-  </optgroup>
-
-  <optgroup label="Broil King - Baron">
-    <option value="0.80">Baron 490</option>
-  </optgroup>
-
-  <optgroup label="Burnhard - Fred">
-    <option value="0.75">Big Fred Deluxe</option>
-  </optgroup>
-
-  <optgroup label="Enders - Monroe">
-    <option value="0.65">Monroe Pro 3 SIK Turbo</option>
-    <option value="0.80">Monroe Pro 4 SIKR Turbo</option>
-  </optgroup>
-
+  <option value="1.2">Weber Genesis II E-610</option>
+  <option value="0.65">Weber Genesis II E-410</option>
+  <option value="0.45">Weber Spirit E-310</option>
+  <option value="0.30">Kleiner Tischgrill</option>
 </select>
 
 <input type="number" id="tara" placeholder="Leergewicht (kg)">
@@ -75,3 +149,218 @@ Neue Flasche
 </div>
 
 <div class="history" id="verlauf"></div>
+
+<script>
+
+let countdownInterval;
+
+// Preset
+function presetSetzen() {
+  let preset = document.getElementById("preset").value;
+
+  if (preset == "5") {
+    document.getElementById("maxGas").value = 5;
+  }
+
+  if (preset == "11") {
+    document.getElementById("maxGas").value = 11;
+  }
+}
+
+// Grill Auswahl
+function grillSetzen() {
+  let wert = document.getElementById("grill").value;
+
+  if (wert) {
+    document.getElementById("verbrauch").value = wert;
+  }
+}
+
+// Reset
+function resetFlasche() {
+  localStorage.clear();
+  location.reload();
+}
+
+// Hauptfunktion
+function berechnen() {
+
+  let tara = parseFloat(document.getElementById("tara").value);
+  let gesamt = parseFloat(document.getElementById("gesamt").value);
+  let maxGas = parseFloat(document.getElementById("maxGas").value);
+  let verbrauch = parseFloat(document.getElementById("verbrauch").value);
+  let preis = parseFloat(document.getElementById("preis").value);
+
+  if (isNaN(tara) || isNaN(gesamt) || isNaN(maxGas)) {
+    document.getElementById("output").innerText =
+      "Bitte alle Werte eingeben!";
+    return;
+  }
+
+  let rest = gesamt - tara;
+
+  if (rest < 0) {
+    document.getElementById("output").innerText =
+      "Fehlerhafte Werte!";
+    return;
+  }
+
+  // Automatischer Verbrauch
+  let lastRest = localStorage.getItem("lastRest");
+  let lastTime = localStorage.getItem("lastTime");
+
+  if (lastRest && lastTime) {
+
+    let diffGas = lastRest - rest;
+    let diffZeit = (Date.now() - lastTime) / 3600000;
+
+    if (diffGas > 0 && diffZeit > 0) {
+      verbrauch = diffGas / diffZeit;
+      document.getElementById("verbrauch").value =
+        verbrauch.toFixed(2);
+    }
+  }
+
+  localStorage.setItem("lastRest", rest);
+  localStorage.setItem("lastTime", Date.now());
+
+  // Startwert speichern
+  if (!localStorage.getItem("startGas")) {
+    localStorage.setItem("startGas", rest);
+  }
+
+  let prozent = (rest / maxGas) * 100;
+
+  if (prozent > 100) prozent = 100;
+
+  document.getElementById("output").innerText =
+    "Restgas: " +
+    rest.toFixed(2) +
+    " kg (" +
+    prozent.toFixed(1) +
+    "%)";
+
+  // Warnung
+  let warnText = "";
+
+  if (prozent < 10) {
+    warnText = "🔴 FAST LEER!";
+  }
+  else if (prozent < 20) {
+    warnText = "⚠️ Bald leer";
+  }
+
+  document.getElementById("warnung").innerText = warnText;
+
+  // Countdown
+  clearInterval(countdownInterval);
+
+  if (!isNaN(verbrauch) && verbrauch > 0) {
+
+    let stunden = rest / verbrauch;
+    let tage = stunden / 24;
+
+    document.getElementById("dauer").innerText =
+      "Hält ca.: " +
+      stunden.toFixed(1) +
+      " h (~" +
+      tage.toFixed(1) +
+      " Tage)";
+
+    let sekunden = stunden * 3600;
+
+    countdownInterval = setInterval(() => {
+
+      if (sekunden <= 0) {
+        document.getElementById("countdown").innerText =
+          "Gas leer!";
+        clearInterval(countdownInterval);
+        return;
+      }
+
+      let h = Math.floor(sekunden / 3600);
+      let m = Math.floor((sekunden % 3600) / 60);
+      let s = Math.floor(sekunden % 60);
+
+      document.getElementById("countdown").innerText =
+        "Leer in: " +
+        h + "h " +
+        m + "m " +
+        s + "s";
+
+      sekunden--;
+
+    }, 1000);
+  }
+
+  // Kosten
+  let startGas = parseFloat(localStorage.getItem("startGas"));
+
+  if (!isNaN(preis) && !isNaN(startGas)) {
+
+    let preisProKg = preis / maxGas;
+    let verbraucht = startGas - rest;
+
+    if (verbraucht > 0) {
+
+      let kosten = verbraucht * preisProKg;
+
+      document.getElementById("kostenVerbraucht").innerText =
+        "💸 Verbraucht: " +
+        kosten.toFixed(2) +
+        " €";
+    }
+  }
+
+  // Verlauf
+  let verlauf =
+    JSON.parse(localStorage.getItem("verlauf")) || [];
+
+  verlauf.push({
+    zeit: Date.now(),
+    rest: rest
+  });
+
+  localStorage.setItem(
+    "verlauf",
+    JSON.stringify(verlauf)
+  );
+
+  let verlaufText = "<b>📊 Verlauf:</b><br><br>";
+
+  verlauf.slice(-5).reverse().forEach(e => {
+
+    let d = new Date(e.zeit);
+
+    verlaufText +=
+      d.toLocaleString() +
+      " → " +
+      e.rest.toFixed(2) +
+      " kg<br>";
+  });
+
+  document.getElementById("verlauf").innerHTML =
+    verlaufText;
+
+  // Balken
+  let bar = document.getElementById("bar");
+
+  bar.style.width = prozent + "%";
+
+  bar.className = "bar";
+
+  if (prozent > 50) {
+    bar.classList.add("green");
+  }
+  else if (prozent > 20) {
+    bar.classList.add("yellow");
+  }
+  else {
+    bar.classList.add("red");
+  }
+}
+
+</script>
+
+</body>
+</html>
