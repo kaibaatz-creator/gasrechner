@@ -1,113 +1,3 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gasflaschen Rechner</title>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #f4f4f4;
-      padding: 20px;
-      margin: 0;
-    }
-
-    h2 {
-      margin-bottom: 20px;
-    }
-
-    .top-row {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 10px;
-    }
-
-    input, select {
-      padding: 12px;
-      margin: 8px;
-      font-size: 18px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-    }
-
-    input {
-      width: 85%;
-      max-width: 350px;
-    }
-
-    select {
-      width: 90%;
-      max-width: 500px;
-    }
-
-    button {
-      padding: 14px;
-      font-size: 18px;
-      background: #2c7be5;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 500px;
-      margin-top: 10px;
-    }
-
-    .reset-btn {
-      background: #dc3545;
-    }
-
-    .result {
-      margin-top: 15px;
-      font-size: 18px;
-      font-weight: bold;
-      line-height: 1.5;
-    }
-
-    .info {
-      font-size: 14px;
-      margin-top: 10px;
-      color: #555;
-    }
-
-    .bar-container {
-      width: 90%;
-      max-width: 500px;
-      background: #ddd;
-      border-radius: 20px;
-      margin: 25px auto;
-      height: 30px;
-      overflow: hidden;
-    }
-
-    .bar {
-      height: 100%;
-      width: 0%;
-      transition: 0.4s;
-    }
-
-    .green { background: #28a745; }
-    .yellow { background: #ffc107; }
-    .red { background: #dc3545; }
-
-    .history {
-      margin-top: 25px;
-      text-align: left;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-    }
-  </style>
-</head>
-
-<body>
-
 <h2>🔥 Gasflaschen Rechner</h2>
 
 <div class="top-row">
@@ -125,125 +15,31 @@
 
 </div>
 
-
-<!-- GRILL AUSWAHL -->
 <select id="grill" onchange="grillSetzen()">
 
   <option value="">Grill wählen</option>
 
-  <!-- WEBER -->
-  <optgroup label="Weber - Q Serie">
-    <option value="0.20">Q1000</option>
-    <option value="0.22">Q1200</option>
-    <option value="0.30">Q2000</option>
-    <option value="0.32">Q2200</option>
-    <option value="0.42">Q3000</option>
-    <option value="0.45">Q3200</option>
-  </optgroup>
-
-  <optgroup label="Weber - Traveler">
-    <option value="0.25">Traveler</option>
-    <option value="0.30">Traveler Compact</option>
-  </optgroup>
-
   <optgroup label="Weber - Spirit">
     <option value="0.45">Spirit E-210</option>
     <option value="0.50">Spirit E-310</option>
-    <option value="0.55">Spirit E-320</option>
-    <option value="0.60">Spirit EPX-325</option>
-    <option value="0.75">Spirit EPX-435</option>
   </optgroup>
 
   <optgroup label="Weber - Genesis">
-    <option value="0.65">Genesis E-315</option>
     <option value="0.75">Genesis E-325</option>
-    <option value="0.80">Genesis EX-335</option>
-    <option value="0.85">Genesis E-415</option>
-    <option value="1.00">Genesis SX-435</option>
     <option value="1.20">Genesis II E-610</option>
-  </optgroup>
-
-  <optgroup label="Weber - Summit">
-    <option value="1.10">Summit FS38</option>
-    <option value="1.20">Summit S-470</option>
-    <option value="1.30">Summit FS48</option>
-    <option value="1.50">Summit S-670</option>
-  </optgroup>
-
-
-  <!-- NAPOLEON -->
-  <optgroup label="Napoleon - Freestyle">
-    <option value="0.45">Freestyle 365</option>
-    <option value="0.60">Freestyle 425</option>
   </optgroup>
 
   <optgroup label="Napoleon - Rogue">
     <option value="0.65">Rogue 425</option>
-    <option value="0.75">Rogue XT 425</option>
     <option value="0.80">Rogue 525</option>
-    <option value="0.95">Rogue 625</option>
-  </optgroup>
-
-  <optgroup label="Napoleon - Prestige">
-    <option value="0.90">Prestige 500</option>
-    <option value="1.00">Prestige 665</option>
-    <option value="1.10">Prestige Pro 665</option>
-  </optgroup>
-
-  <optgroup label="Napoleon - Phantom">
-    <option value="0.85">Phantom Rogue SE 425</option>
-    <option value="1.05">Phantom Prestige 500</option>
-  </optgroup>
-
-
-  <!-- BROIL KING -->
-  <optgroup label="Broil King - Crown">
-    <option value="0.55">Crown 410</option>
-    <option value="0.70">Crown 490</option>
   </optgroup>
 
   <optgroup label="Broil King - Baron">
-    <option value="0.75">Baron 420</option>
     <option value="0.80">Baron 490</option>
-    <option value="0.90">Baron S590</option>
   </optgroup>
 
-  <optgroup label="Broil King - Regal">
-    <option value="1.00">Regal S490</option>
-    <option value="1.10">Regal S590</option>
-    <option value="1.20">Regal Imperial S690</option>
-  </optgroup>
-
-
-  <!-- BURNHARD -->
-  <optgroup label="Burnhard - Fred Serie">
-    <option value="0.60">Fred Basic</option>
-    <option value="0.65">Fred Deluxe</option>
+  <optgroup label="Burnhard - Fred">
     <option value="0.75">Big Fred Deluxe</option>
-    <option value="0.90">Big Fred 4-Brenner</option>
-  </optgroup>
-
-  <optgroup label="Burnhard - Wayne Serie">
-    <option value="0.25">Wayne</option>
-    <option value="0.30">Wayne 2-Brenner</option>
-  </optgroup>
-
-  <optgroup label="Burnhard - Jones Serie">
-    <option value="0.35">Jones</option>
-    <option value="0.45">Jones Pro</option>
-  </optgroup>
-
-
-  <!-- ENDERS -->
-  <optgroup label="Enders - Urban">
-    <option value="0.25">Urban II</option>
-    <option value="0.28">Urban II Pro</option>
-  </optgroup>
-
-  <optgroup label="Enders - Chicago">
-    <option value="0.45">Chicago Next 3 R Turbo</option>
-    <option value="0.60">Chicago Next 4 R Turbo</option>
-    <option value="0.75">Chicago Black 6 KR Turbo</option>
   </optgroup>
 
   <optgroup label="Enders - Monroe">
@@ -251,249 +47,31 @@
     <option value="0.80">Monroe Pro 4 SIKR Turbo</option>
   </optgroup>
 
-  <optgroup label="Enders - Hyde">
-    <option value="0.80">Hyde 4 SIKR Turbo</option>
-    <option value="1.10">Hyde 6 SIKR Turbo</option>
-  </optgroup>
-
-  <optgroup label="Enders - Kansas">
-    <option value="0.90">Kansas II Pro 3 SIK Turbo</option>
-    <option value="1.00">Kansas II Pro 4 SIK</option>
-  </optgroup>
-
-  <optgroup label="Enders - Boston">
-    <option value="0.75">Boston Pro 4 KR Turbo II</option>
-    <option value="1.10">Boston Black 6 KR Turbo</option>
-  </optgroup>
-
-  <optgroup label="Enders - San Diego">
-    <option value="0.35">San Diego Next 3</option>
-    <option value="0.45">San Diego Next 4</option>
-  </optgroup>
-
-  <optgroup label="Enders - Uniq">
-    <option value="0.85">Uniq 3 IK Cruster</option>
-    <option value="1.00">Uniq 4 IK Cruster</option>
-    <option value="1.20">Uniq Pro 3 IK Cruster</option>
-  </optgroup>
-
 </select>
 
-let countdownInterval;
+<input type="number" id="tara" placeholder="Leergewicht (kg)">
+<input type="number" id="gesamt" placeholder="Aktuelles Gewicht (kg)">
+<input type="number" id="maxGas" placeholder="Max. Gasfüllung (kg)">
+<input type="number" id="verbrauch" placeholder="Verbrauch (kg/h)">
 
-function presetSetzen() {
-  let preset = document.getElementById("preset").value;
+<button onclick="berechnen()">Berechnen</button>
 
-  if (preset == "5") {
-    document.getElementById("maxGas").value = 5;
-  }
+<button onclick="resetFlasche()" class="reset-btn">
+Neue Flasche
+</button>
 
-  if (preset == "11") {
-    document.getElementById("maxGas").value = 11;
-  }
-}
+<div class="info">
+ℹ️ Nach der zweiten Messung berechnet die App automatisch deinen tatsächlichen Gasverbrauch.
+</div>
 
-function grillSetzen() {
-  let wert = document.getElementById("grill").value;
+<div class="result" id="output"></div>
+<div class="result" id="dauer"></div>
+<div class="result" id="countdown"></div>
+<div class="result" id="warnung"></div>
+<div class="result" id="kostenVerbraucht"></div>
 
-  if (wert) {
-    document.getElementById("verbrauch").value = wert;
-  }
-}
+<div class="bar-container">
+  <div id="bar" class="bar"></div>
+</div>
 
-function resetFlasche() {
-  localStorage.clear();
-  location.reload();
-}
-
-function berechnen() {
-
-  let tara = parseFloat(document.getElementById("tara").value);
-  let gesamt = parseFloat(document.getElementById("gesamt").value);
-  let maxGas = parseFloat(document.getElementById("maxGas").value);
-  let verbrauch = parseFloat(document.getElementById("verbrauch").value);
-  let preis = parseFloat(document.getElementById("preis").value);
-
-  if (isNaN(tara) || isNaN(gesamt) || isNaN(maxGas)) {
-    document.getElementById("output").innerText =
-      "Bitte alle Werte eingeben!";
-    return;
-  }
-
-  let rest = gesamt - tara;
-
-  if (rest < 0) {
-    document.getElementById("output").innerText =
-      "Fehlerhafte Werte!";
-    return;
-  }
-
-  // Automatischer Verbrauch
-  let lastRest = localStorage.getItem("lastRest");
-  let lastTime = localStorage.getItem("lastTime");
-
-  if (lastRest && lastTime) {
-
-    let diffGas = lastRest - rest;
-    let diffZeit = (Date.now() - lastTime) / 3600000;
-
-    if (diffGas > 0 && diffZeit > 0) {
-      verbrauch = diffGas / diffZeit;
-
-      document.getElementById("verbrauch").value =
-        verbrauch.toFixed(2);
-    }
-  }
-
-  localStorage.setItem("lastRest", rest);
-  localStorage.setItem("lastTime", Date.now());
-
-  // Startwert speichern
-  if (!localStorage.getItem("startGas")) {
-    localStorage.setItem("startGas", rest);
-  }
-
-  let prozent = (rest / maxGas) * 100;
-
-  if (prozent > 100) {
-    prozent = 100;
-  }
-
-  document.getElementById("output").innerText =
-    "Restgas: " +
-    rest.toFixed(2) +
-    " kg (" +
-    prozent.toFixed(1) +
-    "%)";
-
-  // Warnung
-  let warnText = "";
-
-  if (prozent < 10) {
-    warnText = "🔴 FAST LEER!";
-  }
-  else if (prozent < 20) {
-    warnText = "⚠️ Bald leer";
-  }
-
-  document.getElementById("warnung").innerText =
-    warnText;
-
-  // Countdown
-  clearInterval(countdownInterval);
-
-  if (!isNaN(verbrauch) && verbrauch > 0) {
-
-    let stunden = rest / verbrauch;
-    let tage = stunden / 24;
-
-    document.getElementById("dauer").innerText =
-      "Hält ca.: " +
-      stunden.toFixed(1) +
-      " h (~" +
-      tage.toFixed(1) +
-      " Tage)";
-
-    let sekunden = stunden * 3600;
-
-    countdownInterval = setInterval(() => {
-
-      if (sekunden <= 0) {
-
-        document.getElementById("countdown").innerText =
-          "Gas leer!";
-
-        clearInterval(countdownInterval);
-
-        return;
-      }
-
-      let h = Math.floor(sekunden / 3600);
-      let m = Math.floor((sekunden % 3600) / 60);
-      let s = Math.floor(sekunden % 60);
-
-      document.getElementById("countdown").innerText =
-        "Leer in: " +
-        h + "h " +
-        m + "m " +
-        s + "s";
-
-      sekunden--;
-
-    }, 1000);
-  }
-
-  // Kosten
-  let startGas =
-    parseFloat(localStorage.getItem("startGas"));
-
-  if (!isNaN(preis) && !isNaN(startGas)) {
-
-    let preisProKg = preis / maxGas;
-
-    let verbraucht = startGas - rest;
-
-    if (verbraucht > 0) {
-
-      let kosten = verbraucht * preisProKg;
-
-      document.getElementById("kostenVerbraucht").innerText =
-        "💸 Verbraucht: " +
-        kosten.toFixed(2) +
-        " €";
-    }
-  }
-
-  // Verlauf
-  let verlauf =
-    JSON.parse(localStorage.getItem("verlauf")) || [];
-
-  verlauf.push({
-    zeit: Date.now(),
-    rest: rest
-  });
-
-  localStorage.setItem(
-    "verlauf",
-    JSON.stringify(verlauf)
-  );
-
-  let verlaufText =
-    "<b>📊 Verlauf:</b><br><br>";
-
-  verlauf.slice(-5).reverse().forEach(e => {
-
-    let d = new Date(e.zeit);
-
-    verlaufText +=
-      d.toLocaleString() +
-      " → " +
-      e.rest.toFixed(2) +
-      " kg<br>";
-  });
-
-  document.getElementById("verlauf").innerHTML =
-    verlaufText;
-
-  // Balken
-  let bar = document.getElementById("bar");
-
-  bar.style.width = prozent + "%";
-
-  bar.className = "bar";
-
-  if (prozent > 50) {
-    bar.classList.add("green");
-  }
-  else if (prozent > 20) {
-    bar.classList.add("yellow");
-  }
-  else {
-    bar.classList.add("red");
-  }
-}
-
-</script>
-
-</body>
-</html>
+<div class="history" id="verlauf"></div>
