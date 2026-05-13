@@ -39,6 +39,11 @@
       max-width: 350px;
     }
 
+    select {
+      width: 90%;
+      max-width: 400px;
+    }
+
     button {
       padding: 14px;
       font-size: 18px;
@@ -106,6 +111,7 @@
 <h2>🔥 Gasflaschen Rechner</h2>
 
 <div class="top-row">
+
   <select id="preset" onchange="presetSetzen()">
     <option value="">Flaschentyp</option>
     <option value="5">5 kg</option>
@@ -113,14 +119,70 @@
   </select>
 
   <input type="number" id="preis" placeholder="Preis (€)" style="width:120px;">
+
 </div>
 
 <select id="grill" onchange="grillSetzen()">
+
   <option value="">Grill wählen</option>
-  <option value="1.2">Weber Genesis II E-610</option>
-  <option value="0.65">Weber Genesis II E-410</option>
-  <option value="0.45">Weber Spirit E-310</option>
-  <option value="0.30">Kleiner Tischgrill</option>
+
+  <optgroup label="Weber">
+    <option value="0.35">Spirit II E-210</option>
+    <option value="0.45">Spirit E-310</option>
+    <option value="0.55">Spirit EPX-315</option>
+    <option value="0.65">Genesis II E-410</option>
+    <option value="0.75">Genesis EX-435</option>
+    <option value="0.90">Genesis EPX-435</option>
+    <option value="1.20">Genesis II E-610</option>
+    <option value="1.30">Summit S-670</option>
+    <option value="0.30">Traveler</option>
+    <option value="0.25">Q1200</option>
+    <option value="0.35">Q2200</option>
+    <option value="0.45">Q3200</option>
+  </optgroup>
+
+  <optgroup label="Napoleon">
+    <option value="0.55">Freestyle 365</option>
+    <option value="0.65">Rogue 425</option>
+    <option value="0.75">Rogue XT 425</option>
+    <option value="0.90">Prestige 500</option>
+    <option value="1.10">Prestige Pro 665</option>
+    <option value="1.30">Phantom Prestige 500</option>
+    <option value="0.30">TravelQ 285</option>
+  </optgroup>
+
+  <optgroup label="Broil King">
+    <option value="0.55">Crown 420</option>
+    <option value="0.75">Baron 490</option>
+    <option value="0.85">Baron S590</option>
+    <option value="1.00">Regal S590</option>
+    <option value="1.20">Imperial S690</option>
+    <option value="0.30">Porta-Chef 320</option>
+  </optgroup>
+
+  <optgroup label="Burnhard">
+    <option value="0.25">Wayne</option>
+    <option value="0.55">Fred Jr.</option>
+    <option value="0.75">Big Fred Deluxe</option>
+    <option value="0.90">Big Fred 4-Brenner</option>
+    <option value="1.10">Earl 4-Brenner</option>
+  </optgroup>
+
+  <optgroup label="Tenneker">
+    <option value="0.45">Tenneker TG3</option>
+    <option value="0.65">Tenneker Halo TG5</option>
+    <option value="0.85">Tenneker Carbon TG5</option>
+  </optgroup>
+
+  <optgroup label="Baumarkt / Sonstige">
+    <option value="0.35">Enders Urban</option>
+    <option value="0.55">Enders Monroe 3</option>
+    <option value="0.75">Enders Kansas Pro</option>
+    <option value="0.40">Landmann Triton</option>
+    <option value="0.60">Rösle Videro G3</option>
+    <option value="0.80">Rösle Videro G4-S</option>
+  </optgroup>
+
 </select>
 
 <input type="number" id="tara" placeholder="Leergewicht (kg)">
@@ -154,8 +216,9 @@ Neue Flasche
 
 let countdownInterval;
 
-// Preset
+// Flaschen Preset
 function presetSetzen() {
+
   let preset = document.getElementById("preset").value;
 
   if (preset == "5") {
@@ -169,6 +232,7 @@ function presetSetzen() {
 
 // Grill Auswahl
 function grillSetzen() {
+
   let wert = document.getElementById("grill").value;
 
   if (wert) {
@@ -192,16 +256,20 @@ function berechnen() {
   let preis = parseFloat(document.getElementById("preis").value);
 
   if (isNaN(tara) || isNaN(gesamt) || isNaN(maxGas)) {
+
     document.getElementById("output").innerText =
       "Bitte alle Werte eingeben!";
+
     return;
   }
 
   let rest = gesamt - tara;
 
   if (rest < 0) {
+
     document.getElementById("output").innerText =
       "Fehlerhafte Werte!";
+
     return;
   }
 
@@ -215,7 +283,9 @@ function berechnen() {
     let diffZeit = (Date.now() - lastTime) / 3600000;
 
     if (diffGas > 0 && diffZeit > 0) {
+
       verbrauch = diffGas / diffZeit;
+
       document.getElementById("verbrauch").value =
         verbrauch.toFixed(2);
     }
@@ -250,7 +320,8 @@ function berechnen() {
     warnText = "⚠️ Bald leer";
   }
 
-  document.getElementById("warnung").innerText = warnText;
+  document.getElementById("warnung").innerText =
+    warnText;
 
   // Countdown
   clearInterval(countdownInterval);
@@ -272,9 +343,12 @@ function berechnen() {
     countdownInterval = setInterval(() => {
 
       if (sekunden <= 0) {
+
         document.getElementById("countdown").innerText =
           "Gas leer!";
+
         clearInterval(countdownInterval);
+
         return;
       }
 
@@ -294,7 +368,8 @@ function berechnen() {
   }
 
   // Kosten
-  let startGas = parseFloat(localStorage.getItem("startGas"));
+  let startGas =
+    parseFloat(localStorage.getItem("startGas"));
 
   if (!isNaN(preis) && !isNaN(startGas)) {
 
@@ -326,7 +401,8 @@ function berechnen() {
     JSON.stringify(verlauf)
   );
 
-  let verlaufText = "<b>📊 Verlauf:</b><br><br>";
+  let verlaufText =
+    "<b>📊 Verlauf:</b><br><br>";
 
   verlauf.slice(-5).reverse().forEach(e => {
 
