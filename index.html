@@ -141,23 +141,33 @@
     <option value="0.45">Q3200</option>
   </optgroup>
 
+  <optgroup label="Weber - Traveler">
+    <option value="0.25">Traveler</option>
+    <option value="0.30">Traveler Compact</option>
+  </optgroup>
+
   <optgroup label="Weber - Spirit">
     <option value="0.45">Spirit E-210</option>
     <option value="0.50">Spirit E-310</option>
     <option value="0.55">Spirit E-320</option>
+    <option value="0.60">Spirit EPX-325</option>
     <option value="0.75">Spirit EPX-435</option>
   </optgroup>
 
   <optgroup label="Weber - Genesis">
     <option value="0.65">Genesis E-315</option>
     <option value="0.75">Genesis E-325</option>
+    <option value="0.80">Genesis EX-335</option>
     <option value="0.85">Genesis E-415</option>
+    <option value="1.00">Genesis SX-435</option>
     <option value="1.20">Genesis II E-610</option>
   </optgroup>
 
   <optgroup label="Weber - Summit">
     <option value="1.10">Summit FS38</option>
+    <option value="1.20">Summit S-470</option>
     <option value="1.30">Summit FS48</option>
+    <option value="1.50">Summit S-670</option>
   </optgroup>
 
 
@@ -169,13 +179,20 @@
 
   <optgroup label="Napoleon - Rogue">
     <option value="0.65">Rogue 425</option>
+    <option value="0.75">Rogue XT 425</option>
     <option value="0.80">Rogue 525</option>
     <option value="0.95">Rogue 625</option>
   </optgroup>
 
   <optgroup label="Napoleon - Prestige">
     <option value="0.90">Prestige 500</option>
+    <option value="1.00">Prestige 665</option>
     <option value="1.10">Prestige Pro 665</option>
+  </optgroup>
+
+  <optgroup label="Napoleon - Phantom">
+    <option value="0.85">Phantom Rogue SE 425</option>
+    <option value="1.05">Phantom Prestige 500</option>
   </optgroup>
 
 
@@ -194,19 +211,26 @@
   <optgroup label="Broil King - Regal">
     <option value="1.00">Regal S490</option>
     <option value="1.10">Regal S590</option>
+    <option value="1.20">Regal Imperial S690</option>
   </optgroup>
 
 
   <!-- BURNHARD -->
-  <optgroup label="Burnhard - Fred">
+  <optgroup label="Burnhard - Fred Serie">
     <option value="0.60">Fred Basic</option>
     <option value="0.65">Fred Deluxe</option>
     <option value="0.75">Big Fred Deluxe</option>
     <option value="0.90">Big Fred 4-Brenner</option>
   </optgroup>
 
-  <optgroup label="Burnhard - Wayne">
+  <optgroup label="Burnhard - Wayne Serie">
     <option value="0.25">Wayne</option>
+    <option value="0.30">Wayne 2-Brenner</option>
+  </optgroup>
+
+  <optgroup label="Burnhard - Jones Serie">
+    <option value="0.35">Jones</option>
+    <option value="0.45">Jones Pro</option>
   </optgroup>
 
 
@@ -219,6 +243,7 @@
   <optgroup label="Enders - Chicago">
     <option value="0.45">Chicago Next 3 R Turbo</option>
     <option value="0.60">Chicago Next 4 R Turbo</option>
+    <option value="0.75">Chicago Black 6 KR Turbo</option>
   </optgroup>
 
   <optgroup label="Enders - Monroe">
@@ -226,37 +251,33 @@
     <option value="0.80">Monroe Pro 4 SIKR Turbo</option>
   </optgroup>
 
+  <optgroup label="Enders - Hyde">
+    <option value="0.80">Hyde 4 SIKR Turbo</option>
+    <option value="1.10">Hyde 6 SIKR Turbo</option>
+  </optgroup>
+
+  <optgroup label="Enders - Kansas">
+    <option value="0.90">Kansas II Pro 3 SIK Turbo</option>
+    <option value="1.00">Kansas II Pro 4 SIK</option>
+  </optgroup>
+
+  <optgroup label="Enders - Boston">
+    <option value="0.75">Boston Pro 4 KR Turbo II</option>
+    <option value="1.10">Boston Black 6 KR Turbo</option>
+  </optgroup>
+
+  <optgroup label="Enders - San Diego">
+    <option value="0.35">San Diego Next 3</option>
+    <option value="0.45">San Diego Next 4</option>
+  </optgroup>
+
+  <optgroup label="Enders - Uniq">
+    <option value="0.85">Uniq 3 IK Cruster</option>
+    <option value="1.00">Uniq 4 IK Cruster</option>
+    <option value="1.20">Uniq Pro 3 IK Cruster</option>
+  </optgroup>
+
 </select>
-
-
-<input type="number" id="tara" placeholder="Leergewicht (kg)">
-<input type="number" id="gesamt" placeholder="Aktuelles Gewicht (kg)">
-<input type="number" id="maxGas" placeholder="Max. Gasfüllung (kg)">
-<input type="number" id="verbrauch" placeholder="Verbrauch (kg/h)">
-
-<button onclick="berechnen()">Berechnen</button>
-
-<button onclick="resetFlasche()" class="reset-btn">
-Neue Flasche
-</button>
-
-<div class="info">
-ℹ️ Nach der zweiten Messung berechnet die App automatisch deinen tatsächlichen Gasverbrauch.
-</div>
-
-<div class="result" id="output"></div>
-<div class="result" id="dauer"></div>
-<div class="result" id="countdown"></div>
-<div class="result" id="warnung"></div>
-<div class="result" id="kostenVerbraucht"></div>
-
-<div class="bar-container">
-  <div id="bar" class="bar"></div>
-</div>
-
-<div class="history" id="verlauf"></div>
-
-<script>
 
 let countdownInterval;
 
